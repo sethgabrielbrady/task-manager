@@ -13,39 +13,41 @@
 
   <body>
     <div id="app" class="pushable">
+
       <div class="ui sidebar inverted vertical menu visible fixed left">
-        <div class= "ui logo item">
-          <b><i class="icon tasks purple "></i>Task Manager</b>
+        <div class="ui logo item">
+          <b><i class="icon tasks purple"></i>Task Manager</b>
         </div>
-        <div class="ui message green">
-          Use this tool to manage your todos. Have fun!
+        <div class="item">
+          <div class="ui message green">
+            Use this tool to manage your todos. Have fun!
+          </div>
+        </div>
+        <div class="item" v-if="message">
+          <div class="ui message blue">
+            <i class="icon info"></i> {‌{ message }}
+          </div>
         </div>
       </div>
       <div class="ui container pusher">
-
         <div class="ui grid">
           <div class="six wide column">
-
             <div id="todo" class="tasklist">
               <div class="ui header">
                 <i class="icon circle orange play "></i>In Progress Tasks ({{ todoTasks.length}})
               </div>
-
               <task
                 v-bind:task="task"
                 v-for="task in todoTasks" />
-
              </div>
-
             <div id="completed" class="tasklist">
               <div class="ui header">
-                <i class="icon circle green check "></i>Completed Tasks ({{ todoTasks.length}})
+                <i class="icon circle green check "></i>Completed Tasks ({{ completedTasks.length}})
               </div>
               <task
                 v-bind:task="task"
                 v-for="task in completedTasks" />
             </div>
-
           </div>
           <div class="six wide column">
             <div id="editor" class="details ui raise segment purple">
@@ -77,9 +79,9 @@
                 <button class="ui button green" v-if="action == 'create'" v-on:click="createTask($event, task.id)">
                  Create
                 </button>
-               <button class="ui button green" v-if="action == 'edit'" v-on:click="updateTask($event, task.id)">
-               Update
-               </button>
+                <button class="ui button green" v-if="action == 'edit'" v-on:click="updateTask($event, task.id)">
+                 Update
+                </button>
               </form>
             </div>
           </div>
