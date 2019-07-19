@@ -40,6 +40,9 @@ var app = new Vue({
     },
     todoTasks: function(){
       return this.tasks.filter ( item => item.completed == false );
+    },
+    nextId: function(){
+      return (this.tasks.sort(function(a,b){ return a.id - b.id; }))[this.tasks.length - 1].id + 1;
     }
   },
   methods: {
@@ -74,6 +77,20 @@ var app = new Vue({
     clear: function (){
       this.task = {};
       this.action = 'create';
+    },
+    createTask: function(event) {
+      if(!this.task.completed){
+        this.task.completed = false;
+      } else {
+        this.task.completed = true;
+      }
+      let taskId = this.nextId;
+      this.task.id = taskId;
+
+      let newTask = Object.assign({}, this.task);
+      this.tasks.push(newTask);
+
+      this.clear();
     },
     deleteTask: function(event, id){
       event.stopImmediatePropagation();
