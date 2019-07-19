@@ -27,10 +27,12 @@ var app = new Vue({
     tasks: [
       { id: 1, name: 'Todo 1', description: 'This is a todo', completed: false },
       { id: 2, name: 'Todo 2', description: 'This is another todo', completed: true },
-      { id: 3, name: 'Todo 3', description: 'This is yet another todo', completed: false },
-      { id: 4, name: 'Todo 4', description: 'This is also a todo', completed: true }
+      { id: 3, name: 'Three', description: 'This is a compplete todo', completed: true },
+      { id: 4, name: 'Four', description: 'This is another complete todo', completed: true }
     ],
-    message: "Hello World!!!"
+    task: {},
+    message: '',
+    action: 'create'
   },
   computed: {
     completedTasks: function() {
@@ -50,8 +52,28 @@ var app = new Vue({
     },
     editTask: function(event, id){
       event.stopImmediatePropagation();
-      let taskIndex = this.tasks.findIndex(item => item.id == id);
-      console.log("edit task");
+      this.action = 'edit';
+      let task = this.tasks.find(item => item.id == id);
+      if(task) {
+        this.task = { id: id,
+                      name: task.name,
+                      description: task.description,
+                      completed: task.completed };
+      }
+    },
+    updateTask: function(event, id){
+      event.stopImmediatePropagation();
+      event.preventDefault();
+      let task = this.tasks.find(item => item.id == id);
+      if(task) {
+        task.name = this.task.name;
+        task.description = this.task.description;
+        task.completed = this.task.completed;
+      }
+    },
+    clear: function (){
+      this.task = {};
+      this.action = 'create';
     },
     deleteTask: function(event, id){
       event.stopImmediatePropagation();

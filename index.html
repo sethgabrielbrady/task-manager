@@ -34,7 +34,7 @@
               <task
                 v-bind:task="task"
                 v-for="task in todoTasks" />
-                
+
              </div>
 
             <div id="completed" class="tasklist">
@@ -48,6 +48,42 @@
 
           </div>
           <div class="six wide column">
+            <div id="editor" class="details ui raise segment purple">
+            <div class="ui header grid">
+              <div class="left floated nine wide column">
+                <i class="icon edit violet"></i>Details
+              </div>
+              <div class="right floated five wide column">
+                <button class="ui green button right float" v-on:click="clear">
+                  <i class="icon plus circle"></i>New
+                </button>
+              </div>
+            </div>
+            <div class="ui segment">
+              <form class="ui form" v-on:submit="updateTask($event, task.id)">
+                <input type="hidden" name="id" v-model="task.id" />
+                <div class="field">
+                  <label>Name</label>
+                  <input type="text" name="name" placeholder="Name" required="true" v-model="task.name" />
+                </div>
+                <div class="field">
+                  <label>Description</label>
+                  <input type="text" name="description" placeholder="Description" required="true" v-model="task.description" />
+                </div>
+                <div class="field inline">
+                  <label>Completed</label>
+                  <input type="checkbox" name="completed" v-model="task.completed" />
+                </div>
+                <button class="ui button green" v-if="action == 'create'" v-on:click="createTask($event, task.id)">
+                 Create
+                </button>
+               <button class="ui button green" v-if="action == 'edit'" v-on:click="updateTask($event, task.id)">
+               Update
+               </button>
+              </form>
+            </div>
+          </div>
+
           </div>
         </div>
 
